@@ -25,20 +25,56 @@
     align-items: center;
 }
 
+/* About text with flip animation */
 .about-text {
     opacity: 0;
-    animation: fadeInUp 0.8s ease 0.2s forwards;
+    transform-origin: center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    /* Animation added via JavaScript */
+}
+
+.about-text.animate {
+    animation: aboutFlip 1.2s ease-out forwards;
 }
 
 .about-text p {
     margin-bottom: 1.5rem;
     color: #cccccc;
+    opacity: 0;
+    transform-origin: center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    /* Animation added via JavaScript */
+}
+
+/* Animation classes triggered by JavaScript */
+.about-text p.animate:nth-child(1) {
+    animation: aboutFlip 1.2s ease-out 0.1s forwards;
+}
+
+.about-text p.animate:nth-child(2) {
+    animation: aboutFlip 1.2s ease-out 0.3s forwards;
+}
+
+.about-text p.animate:nth-child(3) {
+    animation: aboutFlip 1.2s ease-out 0.5s forwards;
+}
+
+.about-text p.animate:nth-child(4) {
+    animation: aboutFlip 1.2s ease-out 0.7s forwards;
 }
 
 .skills {
     display: flex;
     flex-wrap: wrap;
     margin-top: 2rem;
+    opacity: 0;
+    /* Animation added via JavaScript */
+}
+
+.skills.animate {
+    animation: fadeInUp 0.8s ease 0.9s forwards;
 }
 
 .skill-tag {
@@ -51,21 +87,22 @@
     font-size: 0.9rem;
     transition: all 0.3s ease;
     opacity: 0;
+    /* Animation added via JavaScript */
+}
+
+.skill-tag.animate {
     animation: fadeInUp 0.5s ease forwards;
 }
 
-.skill-tag:nth-child(1) { animation-delay: 0.3s; }
-.skill-tag:nth-child(2) { animation-delay: 0.35s; }
-.skill-tag:nth-child(3) { animation-delay: 0.4s; }
-.skill-tag:nth-child(4) { animation-delay: 0.45s; }
-.skill-tag:nth-child(5) { animation-delay: 0.5s; }
-.skill-tag:nth-child(6) { animation-delay: 0.55s; }
-.skill-tag:nth-child(7) { animation-delay: 0.6s; }
-.skill-tag:nth-child(8) { animation-delay: 0.65s; }
-.skill-tag:nth-child(9) { animation-delay: 0.7s; }
-.skill-tag:nth-child(10) { animation-delay: 0.75s; }
-.skill-tag:nth-child(11) { animation-delay: 0.8s; }
-.skill-tag:nth-child(12) { animation-delay: 0.85s; }
+.skill-tag.animate:nth-child(1) { animation-delay: 1.0s; }
+.skill-tag.animate:nth-child(2) { animation-delay: 1.05s; }
+.skill-tag.animate:nth-child(3) { animation-delay: 1.1s; }
+.skill-tag.animate:nth-child(4) { animation-delay: 1.15s; }
+.skill-tag.animate:nth-child(5) { animation-delay: 1.2s; }
+.skill-tag.animate:nth-child(6) { animation-delay: 1.25s; }
+.skill-tag.animate:nth-child(7) { animation-delay: 1.3s; }
+.skill-tag.animate:nth-child(8) { animation-delay: 1.35s; }
+.skill-tag.animate:nth-child(9) { animation-delay: 1.4s; }
 
 .skill-tag:hover {
     background-color: var(--primary-color);
@@ -75,26 +112,23 @@
 .about-image {
     position: relative;
     z-index: 1;
-    width: 500px;
+    width: 700px;
     max-width: 100%;
     margin: 0 auto;
     opacity: 0;
-    animation: scaleIn 1s ease 0.4s forwards;
+    /* Animation will be controlled via JavaScript */
+}
+
+.about-image.animate {
+    animation: slideFromRight 0.8s ease forwards;
 }
 
 .about-image img {
+    z-index: 1;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    transition: all 0.5s ease;
-    display: block;
-    max-width: 100%;
-}
-
-.about-image:hover img {
-    transform: scale(1.02);
+    transition: transform 0.3s ease;
 }
 
 .about-image::before {
@@ -102,37 +136,33 @@
     position: absolute;
     top: -20px;
     right: -20px;
-    width: 70%;
-    height: 70%;
+    width: 100%;
+    height: 100%;
     border: 2px solid var(--primary-color);
     border-radius: 8px;
     z-index: -1;
-    opacity: 0.5;
+    opacity: 0.7;
     transition: all 0.5s ease;
 }
 
 .about-image:hover::before {
-    top: -15px;
-    right: -15px;
+    top: -20px;
+    right: -20px;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 991px) {
-    .about-content {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-    
+.about-image:hover img {
+    transform: scale(1.03);
+}
+
+@media (max-width: 1200px) {
     .about-image {
-        width: 400px;
-        order: -1;
+        width: 650px;
     }
-    
-    .about-image::before {
-        top: -15px;
-        right: -15px;
-        width: 80%;
-        height: 80%;
+}
+
+@media (max-width: 991px) {
+    .about-image {
+        width: 550px;
     }
 }
 
@@ -143,46 +173,17 @@
     }
     
     .about-image {
-        width: 350px;
-        margin: 0 auto 2rem;
-        order: -1;
+        width: 450px;
+        margin: 0 auto;
     }
     
     .about-image::before {
-        top: -10px;
-        right: -10px;
-        width: 80%;
-        height: 90%;
+        top: -15px;
+        right: -15px;
+        border-width: 2px;
     }
     
-    .skills {
-        justify-content: center;
-    }
-    
-    .about-text p {
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .about {
-        padding: 80px 0;
-    }
-    
-    .about-image {
-        width: 280px;
-    }
-    
-    .about-image::before {
-        width: 70%;
-        height: 70%;
-        opacity: 0.4;
-    }
-    
-    .skill-tag {
-        margin-right: 0.5rem;
-        margin-bottom: 0.5rem;
-        padding: 0.4rem 0.7rem;
-        font-size: 0.8rem;
+    .about-text, .about-text p {
+        animation-duration: 0.9s;
     }
 }

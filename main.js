@@ -2,43 +2,20 @@
 
 // Mobile menu toggle functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Add visitor counter
-    const visitorCounterElement = document.createElement('div');
-    visitorCounterElement.className = 'visitor-counter';
-    visitorCounterElement.innerHTML = '<p>Total Visits: <span id="visitor-count">...</span></p>';
-    document.body.appendChild(visitorCounterElement);
-    
-    // Fetch visitor count from CountAPI
-    fetch('https://api.countapi.xyz/hit/piyushchavan.com/visits')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('visitor-count').textContent = data.value.toLocaleString();
-      })
-      .catch(error => {
-        console.error('Error fetching visitor count:', error);
-        document.getElementById('visitor-count').textContent = 'Unable to load';
-      });
-
-    // Mobile menu functionality
     const mobileMenuButton = document.querySelector('.mobile-menu');
     const navLinks = document.querySelector('.nav-links');
+
+    AOS.init({
+        duration: 1000, // Animation duration in milliseconds
+        once: true, // Whether animation should happen only once - while scrolling down
+    });
+    console.log('AOS initialized');
     
     if (mobileMenuButton && navLinks) {
         mobileMenuButton.addEventListener('click', function() {
             navLinks.classList.toggle('active');
             mobileMenuButton.classList.toggle('active');
-            console.log('Mobile menu clicked'); // Debug log
         });
-    }
-    
-    // Touch event for mobile devices
-    if (mobileMenuButton) {
-        mobileMenuButton.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Prevent default touch behavior
-            navLinks.classList.toggle('active');
-            mobileMenuButton.classList.toggle('active');
-            console.log('Mobile menu touched'); // Debug log
-        }, { passive: false });
     }
     
     // Add scroll animations
@@ -144,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         highlightActiveNavLink();
     }, 100);
     
-    // Enhanced mobile menu styles with improved visibility
+    // Add CSS for mobile menu
     const style = document.createElement('style');
     style.textContent = `
         @media (max-width: 768px) {
@@ -162,13 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 transition: right 0.3s ease;
                 backdrop-filter: blur(5px);
                 z-index: 999;
-                display: flex !important;
-                visibility: hidden;
             }
             
             .nav-links.active {
                 right: 0;
-                visibility: visible;
             }
             
             .nav-links li {
@@ -177,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             .mobile-menu {
                 z-index: 1000;
-                cursor: pointer;
             }
             
             .mobile-menu.active svg {
@@ -227,7 +200,7 @@ function createParticleBackground() {
     resizeCanvas();
     
     // Particle properties
-    const particleCount = 80; // Reduced for better performance on mobile
+    const particleCount = 100;
     const particleSize = 2;
     const particleColor = 'rgba(0, 112, 243, 0.7)';
     const connectDistance = 150;
@@ -294,5 +267,116 @@ function createParticleBackground() {
     animate();
 }
 
+// Section scroll animations
+const createScrollAnimations = () => {
+    // Select all sections to animate
+    const sections = document.querySelectorAll('section');
+    
+    // Configure the Intersection Observer
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('section-visible');
+            // Unobserve after animation is triggered
+            sectionObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.15, // Trigger when 15% of the section is visible
+        rootMargin: '0px 0px -100px 0px' // Adjust timing to trigger earlier
+      }
+    );
+    
+    // Apply observer to all sections
+    sections.forEach((section) => {
+      section.classList.add('section-hidden');
+      sectionObserver.observe(section);
+    });
+  };
+  
+
 // Initialize particle background
 createParticleBackground();
+
+
+
+// Animation initialization script
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Animation script loaded');
+    
+    // Initialize AOS only for non-custom animations
+    AOS.init({
+        duration: 800,
+        once: true,
+        disable: 'mobile' // Disable AOS on mobile devices for better performance
+    });
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+    }
+    
+    // Our custom animation elements
+    const animatedElements = document.querySelectorAll('.slide-from-left, .slide-from-right, .scale-in, .fade-in, .fade-in-up, .flip-animation');
+    
+    // Add active class to elements in viewport
+    function checkIfInView() {
+        animatedElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150; // Distance from viewport to trigger
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                if (!element.classList.contains('active')) {
+                    console.log('Adding active class to', element);
+                    element.classList.add('active');
+                }
+            }
+        });
+    }
+    
+    // Handle skill tags animation separately
+    const skillTags = document.querySelectorAll('.skill-tag');
+    function animateSkillTags() {
+        const aboutSection = document.querySelector('.about');
+        if (!aboutSection) return;
+        
+        const aboutTop = aboutSection.getBoundingClientRect().top;
+        if (aboutTop < window.innerHeight - 300) {
+            skillTags.forEach((tag, index) => {
+                setTimeout(() => {
+                    tag.classList.add('fade-in-up');
+                    tag.classList.add('active');
+                }, 300 + (index * 50));
+            });
+        }
+    }
+    
+    // Trigger animations for elements that are already in view on load
+    function triggerInitialAnimations() {
+        // Force immediate animation for hero section
+        const heroElements = document.querySelectorAll('.hero .subtitle, .hero h1, .hero p, .hero-buttons, .social-links');
+        heroElements.forEach(el => {
+            el.classList.add('active');
+        });
+        
+        // Check other elements
+        checkIfInView();
+        animateSkillTags();
+    }
+    
+    // Run animations on scroll and initial load
+    window.addEventListener('scroll', function() {
+        checkIfInView();
+        animateSkillTags();
+    });
+    
+    // Wait a bit for page to render then trigger initial animations
+    setTimeout(triggerInitialAnimations, 100);
+});

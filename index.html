@@ -8,12 +8,40 @@
   <meta property="og:title" content="Piyush Chavan — AI Developer">
   <meta property="og:description" content="Exploring AI. Building what matters.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://piyushchavan.com/">
+  <meta property="og:site_name" content="Piyush Chavan">
+  <meta property="og:image" content="https://piyushchavan.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Piyush Chavan — AI developer in Berlin. Exploring AI. Building what matters.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Piyush Chavan — AI Developer">
+  <meta name="twitter:description" content="Exploring AI. Building what matters.">
+  <meta name="twitter:image" content="https://piyushchavan.com/og-image.png">
+  <link rel="canonical" href="https://piyushchavan.com/">
   <title>Piyush Chavan — AI Developer</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <!-- Set the motion flag before first paint, so revealed elements are never
+       painted in their hidden state and then hidden again. -->
+  <script>
+    document.documentElement.classList.add("has-motion");
+    // If portfolio.js never boots, nothing would ever be revealed and the page
+    // would sit there blank. Give it a moment, then drop the flag so every
+    // element renders plainly instead.
+    setTimeout(function () {
+      if (!document.documentElement.classList.contains("motion-ready")) {
+        document.documentElement.classList.remove("has-motion");
+      }
+    }, 2500);
+  </script>
+  <noscript><style>
+    .has-motion .reveal, .has-motion .reveal-fade { opacity: 1 !important; transform: none !important; }
+    .has-motion .heading-rule { transform: none !important; }
+  </style></noscript>
   <script src="/site-config.js" defer></script>
   <script src="/portfolio.js" defer></script>
 </head>
@@ -36,17 +64,17 @@
   </header>
 
   <main id="top">
-    <section class="hero section-shell" aria-labelledby="hero-title">
-      <div class="hero-index" aria-hidden="true"><span>01</span><i></i><span>02</span><span>03</span></div>
-      <div class="hero-orbit hero-orbit-left" aria-hidden="true"><span></span><i></i></div>
-      <div class="hero-orbit hero-orbit-right" aria-hidden="true"><span></span><i></i></div>
-      <div class="hero-side-note hero-side-left" aria-hidden="true">IDEAS<br>MODELS<br>SAFER SYSTEMS</div>
-      <div class="hero-side-note hero-side-right" aria-hidden="true">A MORE<br>THOUGHTFUL<br>AI FUTURE</div>
+    <section class="hero section-shell is-inview" aria-labelledby="hero-title" data-motion>
+      <div class="hero-index reveal-fade" aria-hidden="true"><span>01</span><i></i><span>02</span><span>03</span></div>
+      <div class="hero-orbit hero-orbit-left" aria-hidden="true"><span class="hero-orbit-spin"><i></i><b></b></span></div>
+      <div class="hero-orbit hero-orbit-right" aria-hidden="true"><span class="hero-orbit-spin"><i></i><b></b></span></div>
+      <div class="hero-side-note hero-side-left reveal-fade d1" aria-hidden="true">IDEAS<br>MODELS<br>SAFER SYSTEMS</div>
+      <div class="hero-side-note hero-side-right reveal-fade d1" aria-hidden="true">A MORE<br>THOUGHTFUL<br>AI FUTURE</div>
       <div class="hero-main">
-        <p class="eyebrow"><span class="eyebrow-dot"></span> AI DEVELOPER <span class="eyebrow-separator">/</span> APPLIED AI</p>
-        <h1 id="hero-title"><span>Exploring AI.</span><span class="hero-title-accent">Building what matters.</span></h1>
-        <p class="hero-subtitle">Machine learning, LLMs, and safer AI systems.</p>
-        <div class="assistant-card" id="portfolio-assistant">
+        <p class="eyebrow reveal"><span class="eyebrow-dot"></span> AI DEVELOPER <span class="eyebrow-separator">/</span> APPLIED AI</p>
+        <h1 id="hero-title" class="reveal d1"><span>Exploring AI.</span><span class="hero-title-accent">Building what matters.</span></h1>
+        <p class="hero-subtitle reveal d2">Machine learning, LLMs, and safer AI systems.</p>
+        <div class="assistant-card reveal d3" id="portfolio-assistant">
           <div class="assistant-heading">
             <span class="assistant-spark" aria-hidden="true">✳</span>
             <div><p class="assistant-label">PORTFOLIO AI</p><p class="assistant-caption">A guide to my work, projects, and learning</p></div>
@@ -60,24 +88,27 @@
           <div class="prompt-chips" aria-label="Suggested questions">
             <button type="button" data-prompt="What is SentryML?">What is SentryML? <span>↗</span></button>
             <button type="button" data-prompt="Tell me about SafeOps AI">Tell me about SafeOps AI <span>↗</span></button>
-            <button type="button" data-prompt="How does OpenMail work?">How does OpenMail work? <span>↗</span></button>
+            <button type="button" data-prompt="How do the aliases work?">How do the aliases work? <span>↗</span></button>
           </div>
           <div class="assistant-answer" id="assistant-answer" aria-live="polite" aria-atomic="true" hidden></div>
           <p class="assistant-footnote">Portfolio-only answers · based on the project details shown below</p>
         </div>
-        <a class="scroll-cue" href="#work"><span class="scroll-line"></span> SCROLL TO EXPLORE</a>
+        <a class="scroll-cue reveal d4" href="#work" aria-label="Scroll to selected work">
+          <span class="scroll-cue-label">SCROLL TO EXPLORE</span>
+          <span class="scroll-rail" aria-hidden="true"><span class="scroll-drop"></span></span>
+        </a>
       </div>
     </section>
 
     <section class="work-section section-shell" id="work" aria-labelledby="work-title">
-      <div class="section-heading">
+      <div class="section-heading reveal">
         <div class="section-number">01</div>
         <h2 id="work-title">SELECTED WORK</h2>
         <span class="heading-rule"></span>
         <p>Three projects. One curious direction.</p>
       </div>
       <div class="project-grid">
-        <article class="project-card project-sentry reveal">
+        <article class="project-card project-sentry reveal" data-motion>
           <div class="project-topline"><span>01 <i></i></span><span class="project-status status-live"><i></i> LIVE API</span></div>
           <div class="project-art art-sentry" aria-hidden="true"><span class="art-ring"></span><span class="art-node"></span><span class="art-line"></span><span class="art-label">MODEL / MONITOR</span></div>
           <h3>SentryML</h3>
@@ -90,12 +121,13 @@
           </div>
         </article>
 
-        <article class="project-card project-safeops reveal">
+        <article class="project-card project-safeops reveal d1" data-motion>
           <div class="project-topline"><span>02 <i></i></span><span class="project-status status-progress"><i></i> IN PROGRESS</span></div>
           <div class="project-art art-safeops" aria-hidden="true"><span class="art-triangle"></span><span class="art-orbit"></span><span class="art-node"></span><span class="art-label">POLICY / VERIFY</span></div>
           <h3>SafeOps AI</h3>
           <p class="project-kicker">Exploring safer AI operations.</p>
           <p class="project-description">A learning lab where policy checks constrain AI tool calls, deterministic gates verify changes, and rollout controls can promote or roll back a release.</p>
+          <p class="project-stack">FastAPI, Kubernetes, Open Policy Agent, Argo Rollouts, Prometheus, Grafana, Loki, Terraform, GitHub Actions, JEV</p>
           <div class="project-tags"><span>LLM systems</span><span>AI safety</span><span>Cloud-native</span></div>
           <div class="project-links">
             <a href="https://github.com/Piyush70007/Safeops-ai" target="_blank" rel="noopener noreferrer">Explore the lab <span>↗</span></a>
@@ -103,13 +135,17 @@
           </div>
         </article>
 
-        <article class="project-card project-openmail reveal">
+        <article class="project-card project-openmail reveal d2" data-motion>
           <div class="project-topline"><span>03 <i></i></span><span class="project-status status-preview"><i></i> PRODUCT PREVIEW</span></div>
-          <div class="project-art art-openmail" aria-hidden="true"><span class="art-envelope"></span><span class="art-signal"></span><span class="art-node"></span><span class="art-label">YOUR DOMAIN / YOUR MAIL</span></div>
+          <div class="project-art art-openmail" aria-hidden="true">
+            <span class="art-aliases"><i>hi@</i><i>shop@</i><i>news@</i></span>
+            <span class="art-window"><i></i><i></i><i></i></span>
+            <span class="art-label">ONE INBOX / EVERY ALIAS</span>
+          </div>
           <h3>OpenMail</h3>
-          <p class="project-kicker">A custom-domain email product.</p>
-          <p class="project-description">A product exploration for creating and managing custom-domain mailboxes, with a focused inbox experience and an evolving mail-service foundation.</p>
-          <div class="project-tags"><span>Product</span><span>Email</span><span>Web application</span></div>
+          <p class="project-kicker">Free email on a domain you own.</p>
+          <p class="project-description">Point it at a domain you own and get a working inbox on it, free while in preview. Make as many aliases as you want, name each one whatever suits, and read them all in one mail interface.</p>
+          <div class="project-tags"><span>Free in preview</span><span>Domain email</span><span>Unlimited aliases</span></div>
           <div class="project-links">
             <a href="https://openmail-site.vercel.app/" target="_blank" rel="noopener noreferrer">Open the preview <span>↗</span></a>
           </div>
@@ -118,43 +154,55 @@
     </section>
 
     <section class="about-section section-shell" id="about" aria-labelledby="about-title">
-      <div class="section-heading section-heading-simple">
+      <div class="section-heading section-heading-simple reveal">
         <div class="section-number">02</div>
         <h2 id="about-title">ABOUT</h2>
         <span class="heading-rule"></span>
         <p>A little about how I build.</p>
       </div>
       <div class="about-grid">
-        <p class="about-statement">I’m drawn to the point where <em>AI meets real work</em>—and where careful testing makes ambitious ideas more useful.</p>
+        <p class="about-statement reveal">I’m drawn to the point where <em>AI meets real work</em>—and where careful testing makes ambitious ideas more useful.</p>
         <div class="about-copy">
-          <p>I learn by building practical systems: machine-learning APIs, tools that put guardrails around AI actions, and products shaped around everyday needs.</p>
-          <p>My projects are a work in progress. I share what each one does, how it is put together, and what I am still learning along the way.</p>
-          <div class="interest-list" aria-label="Areas of interest"><span>APPLIED AI</span><span>MACHINE LEARNING</span><span>LLM SAFETY</span><span>PRODUCT BUILDING</span></div>
+          <p class="reveal d1">I learn by building practical systems: machine-learning APIs, tools that put guardrails around AI actions, and products shaped around everyday needs.</p>
+          <p class="reveal d2">My projects are a work in progress. I share what each one does, how it is put together, and what I am still learning along the way.</p>
+          <div class="interest-list reveal d3" aria-label="Areas of interest"><span>APPLIED AI</span><span>MACHINE LEARNING</span><span>LLM SAFETY</span><span>PRODUCT BUILDING</span></div>
         </div>
       </div>
     </section>
 
     <section class="education-section section-shell" id="education" aria-labelledby="education-title">
-      <div class="section-heading section-heading-simple">
+      <div class="section-heading section-heading-simple reveal">
         <div class="section-number">03</div>
         <h2 id="education-title">EDUCATION</h2>
         <span class="heading-rule"></span>
         <p>Learning, completed.</p>
       </div>
-      <div class="education-card reveal">
-        <div class="education-mark" aria-hidden="true">UE</div>
-        <div class="education-main">
-          <p class="education-date">COMPLETED · AUGUST 2026</p>
-          <h3>Master’s in Software Engineering</h3>
-          <p>University of Europe for Applied Sciences <span>·</span> Potsdam, Germany</p>
+      <div class="education-list">
+        <div class="education-card reveal">
+          <div class="education-mark" aria-hidden="true">SP</div>
+          <div class="education-main">
+            <p class="education-date">COMPLETED · JUNE 2023</p>
+            <h3>Bachelor of Business Administration and Computer Application</h3>
+            <p>Savitribai Phule Pune University <span>·</span> August 2021 – June 2023</p>
+          </div>
+          <span class="education-check" aria-label="Completed">✓</span>
         </div>
-        <span class="education-check" aria-label="Completed">✓</span>
+
+        <div class="education-card reveal d1">
+          <div class="education-mark" aria-hidden="true">UE</div>
+          <div class="education-main">
+            <p class="education-date">COMPLETED · AUGUST 2026</p>
+            <h3>Master’s in Software Engineering</h3>
+            <p>University of Europe for Applied Sciences <span>·</span> Potsdam, Germany</p>
+          </div>
+          <span class="education-check" aria-label="Completed">✓</span>
+        </div>
       </div>
     </section>
 
-    <section class="contact-section section-shell" id="contact" aria-labelledby="contact-title">
-      <div class="contact-art" aria-hidden="true"><span></span><i></i><b></b></div>
-      <div class="contact-copy">
+    <section class="contact-section section-shell" id="contact" aria-labelledby="contact-title" data-motion>
+      <div class="contact-art reveal-fade" aria-hidden="true"><span></span><i></i><b></b></div>
+      <div class="contact-copy reveal">
         <p class="eyebrow"><span class="eyebrow-dot"></span> HAVE A QUESTION OR IDEA?</p>
         <h2 id="contact-title">Let’s talk about<br><em>what’s possible.</em></h2>
         <p>For project questions, collaboration, or a conversation about applied AI, send me a note.</p>
@@ -168,9 +216,9 @@
   </main>
 
   <footer class="site-footer section-shell">
-    <a class="wordmark" href="#top"><span class="monogram" aria-hidden="true">P<span>.</span></span><span>PIYUSH CHAVAN</span></a>
-    <p>Built with curiosity and care.</p>
-    <a href="#top" class="back-top">BACK TO TOP ↑</a>
+    <a class="wordmark reveal" href="#top"><span class="monogram" aria-hidden="true">P<span>.</span></span><span>PIYUSH CHAVAN</span></a>
+    <p class="reveal d1">Built with curiosity and care.</p>
+    <a href="#top" class="back-top reveal d2">BACK TO TOP ↑</a>
   </footer>
 </body>
 </html>

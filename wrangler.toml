@@ -1,0 +1,21 @@
+name = "piyush-portfolio-assistant"
+main = "worker.mjs"
+compatibility_date = "2026-10-01"
+
+# Secrets are never written here. Add them with:
+#
+#   npx wrangler secret put GROQ_API_KEY
+#   npx wrangler secret put PORTFOLIO_ALLOWED_ORIGINS
+#
+# Then point the site at this worker from site-config.js:
+#
+#   window.PORTFOLIO_AI_API_URL = "https://piyush-portfolio-assistant.<subdomain>.workers.dev";
+
+[vars]
+PORTFOLIO_ALLOWED_ORIGINS = "https://piyushchavan.com,https://www.piyushchavan.com"
+PORTFOLIO_REQUEST_LIMIT = "10"
+# Groq retires models without warning — llama-3.3-70b-versatile was
+# decommissioned in September 2026. Several models may be named, comma
+# separated; they are tried in order and a retired one is skipped.
+GROQ_MODEL = "openai/gpt-oss-120b,qwen/qwen3.8-27b,openai/gpt-oss-20b"
+GEMINI_MODEL = "gemini-2.5-flash"

@@ -3,3 +3,8 @@
 !.env.example
 .vercel
 .DS_Store
+node_modules/
+.wrangler/
+
+# Archived earlier builds and unrelated files — kept locally, never deployed.
+_legacy/

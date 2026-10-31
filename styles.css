@@ -15,6 +15,12 @@
   --page-width: 1500px;
 }
 
+/* Animatable custom properties. Registering them is what lets the orbital
+   spin and the scroll-linked drift coexist on one transform. */
+@property --spin { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+@property --tilt { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@property --drift { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 92px; }
 body {
@@ -24,6 +30,13 @@ body {
   font-family: var(--sans);
   line-height: 1.55;
   overflow-x: hidden;
+}
+/* `overflow-x: hidden` turns body into a scroll container, which detaches the
+   page from the viewport scrollport and can stop IntersectionObserver from
+   ever reporting a reveal target as intersecting. `clip` hides the same
+   overflow without creating a scroll container. */
+@supports (overflow: clip) {
+  body { overflow-x: clip; }
 }
 body.menu-open { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
@@ -64,7 +77,11 @@ button { color: inherit; }
   min-height: min(880px, calc(100svh - 78px)); padding: 90px 0 56px; position: relative;
   display: grid; place-items: center; isolation: isolate;
 }
-.hero-main { width: min(100%, 910px); text-align: center; position: relative; z-index: 2; }
+/* Wide enough for the headline to sit on the two lines the copy reads as.
+   At 910px it broke to "Building what" / "matters." — the h1's own
+   max-width of 1100px could never take effect inside a narrower parent.
+   The assistant card below is width-capped separately and stays centred. */
+.hero-main { width: min(100%, 1100px); text-align: center; position: relative; z-index: 2; }
 .eyebrow {
   display: inline-flex; align-items: center; justify-content: center; gap: 11px;
   margin: 0; color: var(--violet); font: 500 .69rem/1.4 var(--mono); letter-spacing: .2em;
@@ -93,26 +110,28 @@ button { color: inherit; }
 .hero-side-left { left: 1%; }
 .hero-side-right { right: 1%; text-align: right; }
 .hero-orbit { position: absolute; z-index: -1; pointer-events: none; }
+/* The ring and its discs hold still; only the satellites ride around them. */
 .hero-orbit-left {
   width: 300px; height: 300px; left: -7.5%; top: 32%; border: 1px solid rgba(114, 80, 237, .22);
-  border-radius: 50%; transform: rotate(-30deg) scaleY(.72);
+  border-radius: 50%;
+  transform: rotate(calc(-30deg + var(--tilt, 0deg))) scaleY(.72) translateY(var(--drift, 0px));
 }
-.hero-orbit-left::before, .hero-orbit-left::after, .hero-orbit-right::before {
+.hero-orbit-left::before, .hero-orbit-right::before {
   content: ""; position: absolute; background: rgba(114, 80, 237, .08); border-radius: 50%;
 }
 .hero-orbit-left::before { width: 195px; height: 195px; left: 4px; top: 50px; }
-.hero-orbit-left::after { width: 9px; height: 9px; left: 57%; top: 8%; background: var(--violet); }
 .hero-orbit-right {
   width: 340px; height: 340px; right: -8%; top: 21%; border: 1px solid rgba(114, 80, 237, .42);
-  border-radius: 50%; transform: rotate(37deg) scaleY(.78);
+  border-radius: 50%;
+  transform: rotate(calc(37deg + var(--tilt, 0deg))) scaleY(.78) translateY(var(--drift, 0px));
 }
 .hero-orbit-right::before { width: 110px; height: 110px; right: -4px; top: 58px; background: rgba(185, 233, 222, .55); }
-.hero-orbit-right i, .hero-orbit-right span, .hero-orbit-left span {
-  position: absolute; display: block; background: #8c78ed;
-}
-.hero-orbit-right i { width: 1px; height: 100px; top: -50px; right: 30%; }
-.hero-orbit-right span { width: 7px; height: 7px; border-radius: 50%; top: 40%; left: 10%; }
-.hero-orbit-left span { width: 1px; height: 130px; bottom: -32px; right: 18%; }
+.hero-orbit-spin { position: absolute; inset: 0; transform: rotate(var(--spin, 0deg)); }
+.hero-orbit-spin i, .hero-orbit-spin b { position: absolute; display: block; background: #8c78ed; }
+.hero-orbit-left .hero-orbit-spin i { width: 1px; height: 130px; bottom: -32px; right: 18%; }
+.hero-orbit-left .hero-orbit-spin b { width: 9px; height: 9px; border-radius: 50%; left: 57%; top: 8%; background: var(--violet); }
+.hero-orbit-right .hero-orbit-spin i { width: 1px; height: 100px; top: -50px; right: 30%; }
+.hero-orbit-right .hero-orbit-spin b { width: 7px; height: 7px; border-radius: 50%; top: 40%; left: 10%; }
 
 /* Portfolio assistant */
 .assistant-card {
@@ -159,10 +178,15 @@ button { color: inherit; }
 .assistant-answer p { margin: 0; }
 .assistant-footnote { margin: 10px 0 0; text-align: center; color: #93919a; font: .56rem/1.5 var(--mono); letter-spacing: .04em; }
 .scroll-cue {
-  margin: 31px auto 0; display: flex; align-items: center; justify-content: center; gap: 11px;
+  margin: 32px auto 0; display: flex; flex-direction: column; align-items: center; gap: 13px;
   color: #86848c; font: .58rem/1 var(--mono); letter-spacing: .15em;
 }
-.scroll-line { width: 28px; height: 1px; background: #b9b6c1; }
+.scroll-rail { position: relative; width: 1px; height: 46px; overflow: hidden; background: var(--line); }
+.scroll-drop {
+  position: absolute; left: 0; top: 0; width: 1px; height: 17px; background: var(--violet);
+  animation: scroll-drop 2.4s cubic-bezier(.62, 0, .38, 1) infinite;
+  animation-play-state: var(--motion-play);
+}
 
 /* Section headings and work */
 .work-section, .about-section, .education-section { padding-top: 54px; padding-bottom: 104px; }
@@ -175,9 +199,18 @@ button { color: inherit; }
 .project-card {
   position: relative; min-height: 455px; padding: 22px 23px 20px; overflow: hidden; display: flex; flex-direction: column;
   border: 1px solid #e3e1e5; border-radius: 17px; background: rgba(255,255,255,.46);
-  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+  transition: transform .28s ease, translate .28s ease, border-color .28s ease, box-shadow .28s ease;
 }
-.project-card:hover { transform: translateY(-4px); border-color: #cbc5df; box-shadow: 0 15px 38px rgba(40,34,59,.06); }
+/* The lift uses `translate`, not `transform`, so the reveal (which owns
+   `transform`) cannot cancel it. */
+.project-card:hover { translate: 0 -4px; border-color: #cbc5df; box-shadow: 0 15px 38px rgba(40,34,59,.06); }
+.has-motion .project-card.reveal {
+  /* Longhands, not the shorthand — a shorthand would reset transition-delay
+     and cancel the stagger. */
+  transition-property: opacity, transform, translate, border-color, box-shadow;
+  transition-duration: .8s, .8s, .28s, .28s, .28s;
+  transition-timing-function: cubic-bezier(.22,.61,.36,1), cubic-bezier(.22,.61,.36,1), ease, ease, ease;
+}
 .project-topline { display: flex; align-items: center; justify-content: space-between; color: #73717b; font: .65rem/1 var(--mono); }
 .project-topline > span:first-child { display: flex; align-items: center; gap: 12px; }
 .project-topline > span:first-child i { width: 28px; height: 1px; background: #bdbac5; }
@@ -205,15 +238,33 @@ button { color: inherit; }
 }
 .art-safeops .art-orbit { position: absolute; left: 39%; top: 10px; width: 117px; height: 93px; border: 1px solid rgba(114,80,237,.56); border-radius: 50%; transform: rotate(-35deg); }
 .art-safeops .art-node { top: 82px; right: 36%; background: #8fd4c3; box-shadow: 0 0 0 5px rgba(143,212,195,.17); }
-.art-openmail .art-envelope { position: absolute; left: 43%; top: 22px; width: 92px; height: 61px; border: 1px solid rgba(114,80,237,.7); border-radius: 4px; background: rgba(114,80,237,.06); }
-.art-openmail .art-envelope::before, .art-openmail .art-envelope::after { content: ""; position: absolute; top: -1px; width: 63px; height: 1px; background: var(--violet); }
-.art-openmail .art-envelope::before { left: 0; transform: rotate(35deg); transform-origin: left; }
-.art-openmail .art-envelope::after { right: 0; transform: rotate(-35deg); transform-origin: right; }
-.art-openmail .art-signal { position: absolute; left: 57%; top: 1px; width: 1px; height: 19px; background: var(--violet); box-shadow: 10px 7px 0 -0.1px rgba(114,80,237,.55), -10px 7px 0 -0.1px rgba(114,80,237,.55); }
-.art-openmail .art-node { right: 23%; top: 43px; background: #9bd9cb; box-shadow: 0 0 0 7px rgba(155,217,203,.2); }
+/* OpenMail — one inbox, and as many named aliases as you like. */
+.art-openmail .art-aliases { position: absolute; left: 50%; top: 1px; transform: translateX(-50%); display: flex; gap: 5px; }
+.art-openmail .art-aliases i {
+  font: 500 .48rem/1 var(--mono); font-style: normal; letter-spacing: .01em; white-space: nowrap;
+  color: var(--violet-deep); background: rgba(245,241,255,.92); border: 1px solid #ded3f6;
+  padding: 3px 5px; border-radius: 2px;
+}
+.art-openmail .art-window {
+  position: absolute; left: 25%; top: 20px; width: 50%; height: 48px;
+  border: 1px solid rgba(114,80,237,.45); border-radius: 5px; background: rgba(255,255,255,.55);
+}
+.art-openmail .art-window::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 15px;
+  border-right: 1px solid rgba(114,80,237,.22); background: rgba(114,80,237,.06);
+}
+.art-openmail .art-window::after {
+  content: ""; position: absolute; left: 22px; top: 7px; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--violet);
+}
+.art-openmail .art-window i { position: absolute; left: 32px; height: 1px; background: rgba(114,80,237,.32); }
+.art-openmail .art-window i:nth-child(1) { top: 9px; width: 40%; background: rgba(114,80,237,.62); }
+.art-openmail .art-window i:nth-child(2) { top: 21px; width: 56%; }
+.art-openmail .art-window i:nth-child(3) { top: 33px; width: 30%; }
 .project-card h3 { margin: 0 0 3px; font: 500 2rem/1.13 var(--serif); letter-spacing: -.045em; }
 .project-kicker { margin: 0 0 8px; color: #4d4b54; font: 500 .91rem/1.5 var(--serif); }
 .project-description { margin: 0; color: #77757e; font-size: .77rem; line-height: 1.65; }
+.project-stack { margin: 13px 0 0; color: #9b99a3; font: .6rem/1.9 var(--mono); letter-spacing: .015em; }
 .project-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
 .project-tags span { padding: 5px 9px; border: 1px solid #e5e2e8; border-radius: 99px; color: #686670; font-size: .61rem; line-height: 1.2; }
 .project-links { display: flex; flex-wrap: wrap; align-items: center; gap: 17px; margin-top: auto; padding-top: 20px; }
@@ -232,9 +283,11 @@ button { color: inherit; }
 .interest-list { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 28px; color: #777580; font: .57rem/1.5 var(--mono); letter-spacing: .08em; }
 .interest-list span { padding: 7px 9px; border: 1px solid var(--line); border-radius: 4px; }
 .education-section { padding-top: 35px; }
+.education-list { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .education-card {
-  display: flex; align-items: center; gap: 24px; padding: 23px 25px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 24px; padding: 23px 25px;
 }
+.education-card + .education-card { border-top: 1px solid var(--line); }
 .education-mark {
   width: 55px; height: 55px; display: grid; place-items: center; flex: 0 0 auto; border: 1px solid #d9d2f0;
   border-radius: 50%; color: var(--violet-deep); background: rgba(114,80,237,.06); font: 500 .9rem/1 var(--serif);
@@ -263,7 +316,7 @@ button { color: inherit; }
 .social-links a { color: #777580; font: .63rem/1 var(--mono); letter-spacing: .04em; }
 .social-links a span { color: var(--violet); margin-left: 4px; }
 .social-links a:hover { color: var(--violet-deep); }
-.contact-art { position: absolute; width: 400px; height: 400px; right: 3%; top: 50%; transform: translateY(-50%); opacity: .8; }
+.contact-art { position: absolute; width: 400px; height: 400px; right: 3%; top: 50%; transform: translateY(-50%); opacity: var(--art-opacity, .8); }
 .contact-art::before { content: ""; position: absolute; inset: 31px; border: 1px solid rgba(114,80,237,.34); border-radius: 50%; }
 .contact-art::after { content: ""; position: absolute; inset: 78px 6px; border: 1px solid rgba(114,80,237,.3); border-radius: 50%; transform: rotate(52deg); }
 .contact-art span { position: absolute; left: 38%; top: 28%; width: 120px; height: 120px; border-radius: 50%; background: rgba(185,233,222,.7); }
@@ -275,10 +328,140 @@ button { color: inherit; }
 .site-footer p { margin: 0; font: .61rem/1.4 var(--mono); letter-spacing: .04em; }
 .back-top { font-size: .58rem; }
 
-/* Motion */
-.has-motion .reveal { opacity: 0; transform: translateY(15px); transition: opacity .65s ease, transform .65s ease; }
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOTION
+
+   Rules this system follows:
+   · transform and opacity only — nothing here triggers layout
+   · slow enough to read as ambience, not as attention-seeking
+   · each diagram animates to describe the project it belongs to
+   · the scroll-linked layer uses native scroll-driven animations where they
+     exist, and simply does not run where they do not
+   · all of it stops under prefers-reduced-motion (block at the end of file)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Sections settle DOWN into place instead of sliding up. */
+.has-motion .reveal {
+  opacity: 0; transform: translateY(-20px);
+  transition: opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
+}
 .has-motion .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* For elements that already own their transform (the side notes and the
+   contact artwork are centred with translateY(-50%)) — fade only, so the
+   reveal cannot knock them out of position. */
+.has-motion .reveal-fade { opacity: 0; transition: opacity 1.05s cubic-bezier(.22,.61,.36,1); }
+.has-motion .reveal-fade.is-visible { opacity: 1; }
+.has-motion .contact-art.reveal-fade.is-visible { opacity: var(--art-opacity, .8); }
+
+/* The hairline between a section title and its caption draws itself in. */
+.has-motion .heading-rule {
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform 1s cubic-bezier(.22,.61,.36,1) .22s;
+}
+.has-motion .section-heading.is-visible .heading-rule { transform: scaleX(1); }
+
+/* Stagger steps, applied where a group should arrive one piece at a time.
+   Written with the extra class so they outrank the `transition` shorthands
+   above — a shorthand resets transition-delay to zero. */
+.has-motion .reveal.d1, .has-motion .reveal-fade.d1 { transition-delay: .08s; }
+.has-motion .reveal.d2, .has-motion .reveal-fade.d2 { transition-delay: .16s; }
+.has-motion .reveal.d3, .has-motion .reveal-fade.d3 { transition-delay: .24s; }
+.has-motion .reveal.d4, .has-motion .reveal-fade.d4 { transition-delay: .32s; }
+
 @keyframes breathe { 50% { opacity: .45; } }
+
+/* ── Hero orbits ──────────────────────────────────────────────────────────
+   The ring itself never moves — only the satellites ride around it. --tilt
+   gives the ellipse a couple of degrees of gyroscopic sway, --spin is the
+   orbital angle, --drift is the scroll-linked travel. */
+@keyframes orbit-left {
+  0%   { --tilt: 0deg;   --spin: 0deg; }
+  50%  { --tilt: 2.5deg; --spin: 180deg; }
+  100% { --tilt: 0deg;   --spin: 360deg; }
+}
+@keyframes orbit-right {
+  0%   { --tilt: 0deg;    --spin: 0deg; }
+  50%  { --tilt: -2.5deg; --spin: -180deg; }
+  100% { --tilt: 0deg;    --spin: -360deg; }
+}
+@keyframes drift-left  { to { --drift: 84px; } }
+@keyframes drift-right { to { --drift: 116px; } }
+
+/* Decorative motion only runs while it is on screen. The orbit spin drives a
+   custom property, so it cannot be composited — running it for the whole
+   session while the hero is off screen is pure waste. */
+.hero, .project-card, .contact-section { --motion-play: paused; }
+.hero.is-inview, .project-card.is-inview, .contact-section.is-inview { --motion-play: running; }
+
+.hero-orbit-left  { animation: orbit-left 58s linear infinite; animation-play-state: var(--motion-play); }
+.hero-orbit-right { animation: orbit-right 76s linear infinite; animation-play-state: var(--motion-play); }
+
+/* Native scroll-driven layer: the orbits sink away as the hero leaves. */
+@supports (animation-timeline: scroll()) {
+  .hero-orbit-left {
+    animation-name: orbit-left, drift-left;
+    animation-duration: 58s, auto;
+    animation-timing-function: linear, linear;
+    animation-fill-mode: none, both;
+    animation-iteration-count: infinite, 1;
+    animation-timeline: auto, scroll(root block);
+    animation-range: normal, 0px 70vh;
+  }
+  .hero-orbit-right {
+    animation-name: orbit-right, drift-right;
+    animation-duration: 76s, auto;
+    animation-timing-function: linear, linear;
+    animation-fill-mode: none, both;
+    animation-iteration-count: infinite, 1;
+    animation-timeline: auto, scroll(root block);
+    animation-range: normal, 0px 70vh;
+  }
+}
+
+/* ── Scroll cue ───────────────────────────────────────────────────────────
+   A segment falls down the rail, over and over. The cue itself drifts down a
+   few pixels on a slower, deliberately out-of-phase cycle. */
+@keyframes scroll-drop {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  28%  { opacity: 1; }
+  72%  { opacity: 1; }
+  100% { transform: translateY(300%); opacity: 0; }
+}
+@keyframes cue-drift {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 4px; }
+}
+.scroll-cue { animation: cue-drift 3.4s ease-in-out infinite; animation-play-state: var(--motion-play); }
+
+/* ── Project diagrams ─────────────────────────────────────────────────────
+   Each one performs its own project:
+   · SentryML — a scan arm sweeps the ring, the node pulses
+   · SafeOps  — the ellipse tumbles around the fixed policy gate
+   · OpenMail — aliases arrive in a wave, an unread message blinks
+   They start when the card scrolls into view, not on page load. */
+@keyframes scan-sweep { 0%, 100% { transform: skewY(-24deg) translateX(-24px); } 50% { transform: skewY(-24deg) translateX(24px); } }
+@keyframes chord-sweep { 0%, 100% { transform: rotate(-27deg); } 50% { transform: rotate(-7deg); } }
+@keyframes node-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.4); } }
+@keyframes orbit-tumble { to { transform: rotate(325deg); } }
+@keyframes gate-breathe { 0%, 100% { opacity: .72; } 50% { opacity: 1; } }
+@keyframes unread-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.75); } }
+@keyframes alias-wave { 0%, 100% { opacity: .5; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
+
+.project-card.is-visible .art-sentry .art-line { animation: scan-sweep 6.5s ease-in-out infinite; animation-play-state: var(--motion-play); }
+.project-card.is-visible .art-sentry::after    { animation: chord-sweep 9s ease-in-out infinite; animation-play-state: var(--motion-play); }
+.project-card.is-visible .art-node              { animation: node-pulse 3.6s ease-in-out infinite; animation-play-state: var(--motion-play); }
+.project-card.is-visible .art-safeops .art-orbit  { animation: orbit-tumble 15s linear infinite; animation-play-state: var(--motion-play); }
+.project-card.is-visible .art-safeops .art-triangle { animation: gate-breathe 5s ease-in-out infinite; animation-play-state: var(--motion-play); }
+.project-card.is-visible .art-openmail .art-window::after { animation: unread-pulse 2.4s ease-in-out infinite; animation-play-state: var(--motion-play); }
+.project-card.is-visible .art-openmail .art-aliases i:nth-child(1) { animation: alias-wave 3.6s ease-in-out infinite; animation-play-state: var(--motion-play); }
+.project-card.is-visible .art-openmail .art-aliases i:nth-child(2) { animation: alias-wave 3.6s ease-in-out .55s infinite; animation-play-state: var(--motion-play); }
+.project-card.is-visible .art-openmail .art-aliases i:nth-child(3) { animation: alias-wave 3.6s ease-in-out 1.1s infinite; animation-play-state: var(--motion-play); }
+
+/* ── Contact artwork ──────────────────────────────────────────────────────
+   The wide ellipse precesses once every 44 seconds. */
+@keyframes contact-precess { to { transform: rotate(412deg); } }
+.contact-art::after { animation: contact-precess 44s linear infinite; animation-play-state: var(--motion-play); }
 
 @media (max-width: 1100px) {
   .hero-side-note { display: none; }
@@ -306,7 +489,7 @@ button { color: inherit; }
   .about-copy { max-width: 650px; }
   .work-section, .about-section, .education-section { padding-bottom: 78px; }
   .contact-section { min-height: 400px; padding: 55px 35px; }
-  .contact-art { right: -100px; opacity: .4; }
+  .contact-art { right: -100px; --art-opacity: .4; }
 }
 @media (max-width: 600px) {
   html { scroll-padding-top: 74px; }
@@ -323,7 +506,7 @@ button { color: inherit; }
   .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
   .site-nav {
     position: fixed; inset: 69px 0 auto; display: none; padding: 18px 24px 25px; flex-direction: column; align-items: flex-start; gap: 0;
-    border-bottom: 1px solid var(--line); background: rgba(246,245,240,.98); box-shadow: 0 14px 26px rgba(31,28,43,.06);
+    border-bottom: 1px solid var(--line); background: var(--paper); box-shadow: 0 14px 26px rgba(31,28,43,.06);
   }
   .site-nav.is-open { display: flex; }
   .site-nav a { width: 100%; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: .7rem; }
@@ -372,12 +555,26 @@ button { color: inherit; }
   .contact-copy h2 { font-size: 3.05rem; }
   .contact-copy > p:not(.eyebrow) { max-width: 305px; font-size: .82rem; }
   .contact-link { font-size: .82rem; }
-  .contact-art { width: 290px; height: 290px; right: -125px; opacity: .28; }
+  .contact-art { width: 290px; height: 290px; right: -125px; --art-opacity: .28; }
   .site-footer { min-height: 90px; flex-wrap: wrap; padding-block: 18px; }
   .site-footer .wordmark { font-size: .58rem; }
   .site-footer p { order: 3; width: 100%; margin-top: -10px; text-align: center; font-size: .55rem; }
   .back-top { font-size: .53rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    /* Scroll-driven animations ignore duration, so they have to be unwired
+       explicitly or they would keep running for reduced-motion users. */
+    animation-timeline: auto !important;
+    animation-range: normal !important;
+  }
+  /* The falling segment is the motion; without it the cue returns to a plain
+     hairline, which is what it was before. */
+  .scroll-rail { width: 28px; height: 1px; background: var(--line); }
+  .scroll-drop { display: none; }
+  .scroll-cue { animation: none; }
 }

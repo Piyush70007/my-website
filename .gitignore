@@ -8,3 +8,9 @@ node_modules/
 
 # Archived earlier builds and unrelated files — kept locally, never deployed.
 _legacy/
+.codex-npm-cache/
+frontend/dist/
+output/
+
+# Previous local-only design study.
+preview/

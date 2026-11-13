@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/Piyush70007/openmail-site",
+  "ui_commit": "8fc88c66c9aacffb9784b1e0f8d5fbada766b71c",
+  "original_sha256": {
+    "app.html": "7c93b518830da83b53290c1b058141c0eaa10fa49911faa8880593f9066091df",
+    "app-ui.js": "df411d1045fd1450b91f7b5902c7b28d49db920ae95cee3c5712acb5f6666859",
+    "app.css": "ab2512afcd2a2e211ca6b9c861d6c67abc4178664535e218be37b9f27a9ca110",
+    "styles.css": "9ff2bf3f7c47266d109e1d62371343db9c6354ab81d6ad9adf47610177a5830f",
+    "workspace.css": "08324d7898e683a9664403fc4a3497e85cd2af7d2b47ce39e822dd72a526757e",
+    "insights.css": "87e469c530117e1f97512505f6c6083766a0acd5596b3bb35fdd0ce805549759",
+    "workspace-navigation.css": "9bb273d498ba7c9990eda8ed23754f45a3c25129bc36749505aa8c9bba6fcf42",
+    "favicon.svg": "79060b74bcdaad751e98a96416faa4e1c22ab449060c2b746af3a0e3a2bc5032"
+  },
+  "notes": "app.html has local asset paths and disconnected transport; UI styles and app-ui.js are unchanged. All displayed account data is fictional."
+}

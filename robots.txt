@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /openmail/
+Disallow: /frontend/
+Disallow: /preview/
 
 Sitemap: https://piyushchavan.com/sitemap.xml

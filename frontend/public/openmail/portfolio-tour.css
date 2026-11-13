@@ -1,0 +1,6 @@
+.portfolio-tour-cursor{position:fixed;z-index:99;top:150px;left:450px;pointer-events:none;color:#c6ffe9;text-shadow:0 2px 12px #000;font:44px/1 system-ui;opacity:0;transition:left .75s cubic-bezier(.22,1,.36,1),top .75s cubic-bezier(.22,1,.36,1),opacity .2s;filter:drop-shadow(0 0 9px #b2ffe978)}
+.portfolio-tour-cursor.is-visible{opacity:1}
+.portfolio-scene-enter{animation:portfolio-scene-in .8s cubic-bezier(.22,1,.36,1) both}
+@keyframes portfolio-scene-in{from{opacity:.25;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+html[data-tour-running=false] .portfolio-scene-enter{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.portfolio-tour-cursor{display:none}.portfolio-scene-enter{animation:none}}

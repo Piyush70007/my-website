@@ -1,0 +1,10 @@
+# Asset provenance
+
+- University of Europe logo: [official press gallery](https://www.ue-germany.com/de/news-center/presse), original [PNG](https://www.ue-germany.com/uploads/sites/9/2024/07/final-vectors-transparent_logo-1.png). Unmodified, used to identify the institution Piyush attended.
+- Savitribai Phule Pune University emblem: [official logo downloads](https://bsw.unipune.ac.in/Logos.html), original [JPG](https://bsw.unipune.ac.in/BSD_Photos/All%20LOGO/University%20New%20Logo.JPG). Unmodified, used to identify the institution Piyush attended.
+- Manrope and DM Mono: Google Fonts, self-hosted with the accompanying SIL Open Font License notices in `public/assets`.
+- OpenMail preview: actual public frontend files from Piyush's [OpenMail repository](https://github.com/Piyush70007/openmail-site), commit `8fc88c66c9aacffb9784b1e0f8d5fbada766b71c`. See `public/openmail/source-manifest.json` for original file hashes. HTML changes only isolate the preview, redirect static asset paths, and substitute fictional data. Original layout, CSS, and mailbox JavaScript are preserved. No credentials, real messages, API keys, or backend files are included.
+- Particle artwork and SafeOps architecture illustration: original canvas/CSS/vector code in this project.
+- SentryML response: a labeled example from the project's README. It is not live inference or an invented dashboard.
+
+University names and marks belong to their respective institutions. Their presence identifies education, not an endorsement.

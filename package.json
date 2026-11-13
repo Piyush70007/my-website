@@ -4,9 +4,10 @@
   "private": true,
   "description": "Source for piyushchavan.com",
   "scripts": {
-    "dev": "python3 -m http.server 8000",
+    "dev": "npm --prefix frontend run dev",
     "deploy:assistant": "wrangler deploy",
-    "test": "node test/site.test.js"
+    "test": "node --test test/assistant.test.mjs && npm --prefix frontend test",
+    "build": "npm --prefix frontend run build && node scripts/prepare-pages.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"

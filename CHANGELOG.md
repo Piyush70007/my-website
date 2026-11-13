@@ -1,3 +1,10 @@
+## 13 November 2026 — Publish the interactive portfolio
+
+- Replace the old landing page with the React portfolio, keeping the existing custom domain and a remote backup of the previous site.
+- Add the selected rotating Hyper3D portrait, real OpenMail interface tour, Mivvy desktop/mobile flip card, both degrees, and a CV request section.
+- Connect Ask my AI to the existing server-side Groq service, refresh its knowledge for all four projects, and align the browser timeout with server fallback.
+- Add repeatable GitHub Pages preparation and tests for the assistant boundaries. The current Mivvy front image remains a web-browser capture until the Windows screenshot is supplied.
+
 # What changed in this revision
 
 Grouped by reason, not by file, so the diff is reviewable. Every change below has a

@@ -20,3 +20,13 @@ The browser's local-origin guide is intentionally separate from model answers. F
 ## Limits
 
 The Windows Mivvy executable was not run on this Mac. Its front preview remains a desktop-browser capture until the user provides a Windows screenshot. Native Safari compatibility and an external penetration test were not part of this release. The CV PDF remains deferred. Provider quotas and distributed per-isolate throttling still apply.
+
+## Mobile interaction regression review
+
+Fixed a reveal feedback loop at the viewport boundary: the same moving element had been observed repeatedly, allowing its transform to cross its own threshold. Entrances now latch after first entry; phone reveals keep controls stationary. The CTA's document position remained 428.5078125px while scrolling through and beyond its former boundary, with no resetting transform.
+
+The OpenMail explorer now renders directly under body, outside animated wrappers. Its X has a 44×44px hit area. Tested opening and closing repeatedly, closing after iframe search/category interaction, Escape from the parent and the frame, removed iframe content after close, restored focus, released scroll lock, and preserved the exact background scroll position. Reviewed 320×740, 390×844, 390×650 and 1440×1000 layouts. No horizontal page overflow was observed.
+
+The broader visitor review covered mobile menu and work navigation, Mivvy flipping, SentryML mouse/keyboard tabs and animation reaching its result, SafeOps reaching its blocked-action result, OpenMail manual tour navigation reaching Results, 3D pause/front/keyboard controls, global motion pause, local AI education answer and dismissal, university image loading, and the honest CV mailto link. All eight external product/source/university links returned HTTP 200. No application console errors were observed.
+
+Automated total: 17 passing tests (6 backend and 11 frontend), including the new sandboxed Escape/inner-overlay regression. These viewport checks do not replace testing on every physical phone or browser.

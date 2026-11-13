@@ -2,7 +2,7 @@
 
 A component-based React + Vite rebuild of the public portfolio, with Motion for scroll reveals and transitions. This is the React source for the GitHub Pages site. The root publication is generated with `npm run build` from the repository root. The existing Cloudflare Worker powers AI answers on the two public portfolio origins.
 
-The motion update adds replaying scroll entrances, cursor-responsive project frames, and a guided tour through the real OpenMail interface. SentryML and SafeOps use explicitly labeled animated examples. Each example can be paused; the floating Motion control pauses the whole page. Timed scenes stop offscreen and in background tabs, and respect the system's reduced-motion setting.
+The motion update adds one-time scroll entrances, cursor-responsive project frames, and a guided tour through the real OpenMail interface. SentryML and SafeOps use explicitly labeled animated examples. Each example can be paused; the floating Motion control pauses the whole page. Timed scenes stop offscreen and in background tabs, and respect the system's reduced-motion setting.
 
 The hero shows the Hyper3D Rodin bust selected by Piyush on 13 November 2026, with a black shirt and jacket, cropped below the chest. The optimized local GLB is approximately 3.17 MB. `AvatarBust.jsx` loads it with Meshopt compression and provides slow 360-degree rotation, pointer dragging, keyboard rotation, pause and front controls. Motion stops offscreen and respects reduced-motion settings. The approved 2D portrait remains the loading and WebGL fallback. Visitors do not contact Hyper3D. See `AVATAR_SOURCES.md` for provenance.
 
@@ -44,3 +44,7 @@ The Mivvy card flips between the current desktop-browser and phone web screensho
 The original public site is retained in the remote backup branch `backup/portfolio-before-studio-redesign-20261111`. The public CV remains unset until Piyush supplies it.
 
 The source snapshot can be refreshed with `python3 scripts/sync-openmail-preview.py /absolute/path/to/openmail-site`; update its recorded commit if the upstream revision changes. It copies an explicit allowlist, never environment files or account data.
+
+## Mobile interaction fixes
+
+Scroll entrances stay visible after their first reveal. Phone sections fade without moving their touch targets. The OpenMail explorer is portaled outside reveal transforms, locks background scrolling while open, and has a 44px close button. Closing restores the trigger focus without scrolling. Escape from the sandboxed preview uses a source-checked dismissal message, while inner menus and compose dialogs retain their own Escape behavior.

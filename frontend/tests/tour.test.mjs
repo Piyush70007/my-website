@@ -10,6 +10,7 @@ test('the tour accepts only parent messages and allowlisted views; pausing cance
   const context = vm.createContext({
     window: { parent, addEventListener(type, listener) { if (type === 'message') receive = listener; } },
     document: {
+      addEventListener() {},
       body: { append() {}, dataset: {} }, documentElement: { dataset: {} },
       createElement: () => ({ classList: classes, style: {}, setAttribute() {} }),
       querySelector(selector) {
@@ -33,4 +34,34 @@ test('the tour accepts only parent messages and allowlisted views; pausing cance
   assert.equal(pending, null);
   assert.equal(clicked.length, 1);
   assert.match(clicked[0], /workspace-view="inbox"/);
+});
+
+test('Escape requests preview dismissal only when no inner dialog or menu is open', () => {
+  let keydown, innerOpen = false, prevented = false;
+  const messages = [], parent = { postMessage(message) { messages.push(message); } };
+  const context = vm.createContext({
+    window: { parent, addEventListener() {} },
+    document: {
+      body: { append() {} },
+      createElement: () => ({ classList: {}, setAttribute() {} }),
+      addEventListener(type, listener, options) { if (type === 'keydown') { assert.equal(options.capture, true); keydown = listener; } },
+      querySelector(selector) {
+        if (selector.startsWith('dialog[open]')) return innerOpen ? {} : null;
+        if (selector === '#mailView') return { hidden: true };
+        return null;
+      },
+    },
+    MutationObserver: class { observe() {} },
+  });
+  vm.runInContext(readFileSync(new URL('../public/openmail/portfolio-tour.js', import.meta.url), 'utf8'), context);
+  const escape = () => keydown({ key: 'Escape', preventDefault() { prevented = true; } });
+  innerOpen = true; escape();
+  assert.equal(messages.length, 0);
+  assert.equal(prevented, false);
+  innerOpen = false; escape();
+  assert.equal(messages.length, 1);
+  assert.equal(messages[0].type, 'portfolio:close');
+  assert.equal(prevented, true);
+  keydown({ key: 'Enter' });
+  assert.equal(messages.length, 1);
 });

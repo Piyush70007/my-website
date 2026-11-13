@@ -40,7 +40,9 @@ export function useSceneCycle(durations, running) {
 }
 
 export function Reveal({ children, className = '', delay = 0 }) {
-  const ref = useRef(null), visible = useInView(ref, { amount: .06, margin: '0px 0px -35px 0px' });
+  // An entrance stays revealed. Resetting the transformed observer target at
+  // the viewport edge can repeatedly move it back across its own threshold.
+  const ref = useRef(null), visible = useInView(ref, { once: true, amount: .06, margin: '0px 0px -35px 0px' });
   const { enabled } = useSiteMotion();
   return <div ref={ref} className={`scroll-reveal ${visible || !enabled ? 'is-visible' : ''} ${className}`} style={{ '--reveal-delay': `${delay}s` }}>{children}</div>;
 }

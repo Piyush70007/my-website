@@ -1,3 +1,9 @@
+## 13 November 2026 — Fix phone scrolling and preview dismissal
+
+- Stop scroll entrances from repeatedly hiding and showing at viewport edges; phone controls remain stationary while sections fade in.
+- Keep the OpenMail explorer outside animated wrappers, enlarge its X touch target, preserve the page position on close, and handle Escape from inside the embedded preview.
+- Verify the broader visitor flow across narrow, short and desktop viewports, and add a regression check for sandboxed Escape handling.
+
 ## 13 November 2026 — Publish the interactive portfolio
 
 - Replace the old landing page with the React portfolio, keeping the existing custom domain and a remote backup of the previous site.

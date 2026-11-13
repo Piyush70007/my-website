@@ -7,6 +7,14 @@
   cursor.setAttribute('aria-hidden', 'true');
   cursor.textContent = '↖';
   document.body.append(cursor);
+  // Keyboard events inside a sandboxed frame do not reach the outer dialog.
+  // Leave Escape to a child dialog/menu first; otherwise request dismissal.
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || event.defaultPrevented || window.parent === window) return;
+    if (document.querySelector('dialog[open], .mobile-workspace-menu[open], .mail-folder-menu[open]')) return;
+    event.preventDefault();
+    window.parent.postMessage({ type: 'portfolio:close' }, '*');
+  }, { capture: true });
   let ready = false, pending = null, timer = null, previousScene = null;
   function applyScene(data) {
     clearTimeout(timer);

@@ -24,7 +24,7 @@ function disposeModel(model) {
 export default function AvatarBust() {
   const mount = useRef(null), api = useRef(null), runningRef = useRef(false);
   const { enabled } = useSiteMotion(), active = useActiveScene(mount);
-  const [paused, setPaused] = useState(false), [status, setStatus] = useState(avatarAsset.model ? 'loading' : 'portrait');
+  const [paused, setPaused] = useState(false), [status, setStatus] = useState(avatarAsset.model ? 'loading' : 'unavailable');
   const running = active && !paused;
   runningRef.current = running;
   useEffect(() => { api.current?.setRunning(running); }, [running]);
@@ -144,16 +144,15 @@ export default function AvatarBust() {
 
   const ready = status === 'ready';
   return <div className="avatar-wrap">
-    <div className={`avatar-stage ${ready ? 'is-ready' : 'is-portrait'}`} ref={mount} tabIndex={ready ? 0 : undefined}
-      aria-label={ready ? 'Drag to rotate Piyush’s 3D bust, or use left and right arrow keys' : 'Portrait of Piyush'}>
-      {!ready && <img className="avatar-portrait" src={avatarAsset.portrait} alt="Piyush wearing a black shirt and jacket" />}
+    <div className={`avatar-stage ${ready ? 'is-ready' : 'is-pending'}`} ref={mount} tabIndex={ready ? 0 : undefined}
+      aria-label={ready ? 'Drag to rotate Piyush’s 3D bust, or use left and right arrow keys' : '3D portrait'}>
       {status === 'loading' && <span className="avatar-status" role="status">Loading 3D portrait…</span>}
-      {status === 'failed' && <span className="avatar-status" role="status">Portrait view · 3D unavailable on this device</span>}
+      {(status === 'failed' || status === 'unavailable') && <span className="avatar-status" role="status">3D portrait unavailable on this device</span>}
     </div>
     <div className="avatar-controls"><span>PIYUSH / {ready ? '3D PORTRAIT' : 'PORTRAIT'}</span>
       {ready && <div><button onClick={() => api.current?.front()} aria-label="Show avatar front"><RotateCcw size={13} /><span>Front</span></button>
         <button onClick={() => setPaused(value => !value)} disabled={!enabled} aria-pressed={paused} aria-label={paused ? 'Rotate avatar automatically' : 'Pause avatar rotation'}>{paused ? <Play size={13} /> : <Pause size={13} />}</button></div>}
     </div>
-    <p className="avatar-hint">{ready ? 'DRAG TO EXPLORE · 360°' : '3D VERSION IN PREPARATION'}</p>
+    <p className="avatar-hint">{ready ? 'DRAG TO EXPLORE · 360°' : status === 'loading' ? 'PREPARING 3D VIEW' : '3D VIEW UNAVAILABLE'}</p>
   </div>;
 }

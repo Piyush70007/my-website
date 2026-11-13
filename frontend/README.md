@@ -4,7 +4,7 @@ A component-based React + Vite rebuild of the public portfolio, with Motion for 
 
 The motion update adds one-time scroll entrances, cursor-responsive project frames, and a guided tour through the real OpenMail interface. SentryML and SafeOps use explicitly labeled animated examples. Each example can be paused; the floating Motion control pauses the whole page. Timed scenes stop offscreen and in background tabs, and respect the system's reduced-motion setting.
 
-The hero shows the Hyper3D Rodin bust selected by Piyush on 13 November 2026, with a black shirt and jacket, cropped below the chest. The optimized local GLB is approximately 3.17 MB. `AvatarBust.jsx` loads it with Meshopt compression and provides slow 360-degree rotation, pointer dragging, keyboard rotation, pause and front controls. Motion stops offscreen and respects reduced-motion settings. The approved 2D portrait remains the loading and WebGL fallback. Visitors do not contact Hyper3D. See `AVATAR_SOURCES.md` for provenance.
+The hero shows the Hyper3D Rodin bust selected by Piyush on 13 November 2026, with a black shirt and jacket, cropped below the chest. The optimized local GLB is approximately 3.17 MB. `AvatarBust.jsx` loads it with Meshopt compression and provides slow 360-degree rotation, pointer dragging, keyboard rotation, pause and front controls. Motion stops offscreen and respects reduced-motion settings. The loading area is reserved for the 3D view; no photo or raster fallback is rendered. An unavailable device receives a short text status. Visitors do not contact Hyper3D. See `AVATAR_SOURCES.md` for provenance.
 
 ## Run
 

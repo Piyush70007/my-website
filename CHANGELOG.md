@@ -1,3 +1,8 @@
+## 13 November 2026 — Remove the portrait flash
+
+- Remove the flat portrait from the 3D viewer’s loading and device fallback states so reloading never briefly shows a second image.
+- Keep the 3D model and its controls, with a quiet text status while it loads. Remove the unused portrait from public assets.
+
 ## 13 November 2026 — Fix phone scrolling and preview dismissal
 
 - Stop scroll entrances from repeatedly hiding and showing at viewport edges; phone controls remain stationary while sections fade in.

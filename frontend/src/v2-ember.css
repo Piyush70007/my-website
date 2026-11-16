@@ -1,0 +1,47 @@
+/* Ember: warm obsidian glass with a fault line. Active when <html data-theme="ember">. */
+html[data-theme=ember]{background:#0b0907;color:#f6efe6;--v2-ink:#f6efe6;--v2-ground:#0b0907;--v2-accent:#ff9a5c;--v2-fill:#ff7a3d;--v2-muted:#ab9f91;--v2-rule:rgba(255,226,196,.14);--glass:rgba(255,236,214,.055);--glass-strong:rgba(24,17,12,.62);--glass-line:rgba(255,214,180,.17);--copy:#d6cbbd;--glow-rgb:255 122 61;--blob2-rgb:255 61 119;--blob3-rgb:255 190 90;--assistant-bg:linear-gradient(120deg,rgba(74,42,30,.74),rgba(30,21,16,.74))}
+html[data-theme=ember] body::before{background:radial-gradient(30% 34% at 82% 20%,rgb(255 122 61 / .5),transparent 70%),radial-gradient(24% 26% at 68% 30%,rgb(255 61 119 / .32),transparent 72%),radial-gradient(42% 30% at 16% 96%,rgb(255 190 90 / .15),transparent 70%)}
+/* dot field: faint everywhere, bright around the pointer */
+html[data-theme=ember]::before,html[data-theme=ember] body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(circle,rgba(255,224,196,.9) 1px,transparent 1.5px);background-size:28px 28px}
+html[data-theme=ember]::before{opacity:.07}
+html[data-theme=ember] body::after{opacity:.55;-webkit-mask-image:radial-gradient(300px circle at var(--px,72%) var(--py,30%),#000,transparent 72%);mask-image:radial-gradient(300px circle at var(--px,72%) var(--py,30%),#000,transparent 72%)}
+html[data-theme=ember] ::selection{background:#ff7a3d;color:#1a0d06}
+html[data-theme=ember] .scroll-progress{display:none}
+html[data-theme=ember] .v2-button-accent{background:linear-gradient(135deg,#ffa25c,#ff5c7f);color:#1a0d06;box-shadow:0 14px 38px -10px rgb(255 100 80 / .7)}
+html[data-theme=ember] .v2-button-accent:hover{background:linear-gradient(135deg,#ffb87a,#ff7b98)}
+html[data-theme=ember] .v2-header .v2-nav-contact:hover,html[data-theme=ember] .v2-button-dark:hover{background:#ff9a5c;color:#1a0d06}
+html[data-theme=ember] .v2-wordmark i{background:linear-gradient(135deg,#ffa25c,#ff5c7f)}
+html[data-theme=ember] .v2-contact h2 a{color:#ff9a5c}
+html[data-theme=ember] .fx-marquee i{background:linear-gradient(135deg,#ffa25c,#ff5c7f)}
+html[data-theme=ember] .fx-marquee span{-webkit-text-stroke-color:rgba(255,236,214,.5)}
+html[data-theme=ember] .fx-intro{background:#120d09;color:#f6efe6}
+html[data-theme=ember] .fx-intro span i,html[data-theme=ember] .fx-intro b{background:#ff8a4c}
+html[data-theme=ember] .v2-button-light{background:#f6efe6;color:#1a0d06}
+html[data-theme=ember] .v2-button-ghost:hover{background:#f6efe6;color:#1a0d06}
+html[data-theme=ember] .v2-media-tabs button[aria-pressed=true]{color:#0b0907}
+html[data-theme=ember] .v2-logo{background:#f6efe6}
+/* the fault line: page progress drawn as a crack down the left edge */
+.fx-fault{display:none}
+html[data-theme=ember] .fx-fault{display:block;position:fixed;left:max(14px,calc((100vw - 1240px)/2 - 74px));top:0;width:34px;height:100vh;z-index:35;pointer-events:none;overflow:visible}
+html[data-theme=ember] .fx-fault path{fill:none;stroke-linejoin:miter;vector-effect:non-scaling-stroke}
+html[data-theme=ember] .fx-fault .fx-fault-base{stroke:rgba(255,226,196,.13);stroke-width:1}
+html[data-theme=ember] .fx-fault .fx-fault-live{stroke:#ff8a4c;stroke-width:2;filter:drop-shadow(0 0 6px rgb(255 122 61 / .9))}
+@media(max-width:1380px){html[data-theme=ember] .fx-fault{display:none}html[data-theme=ember] .scroll-progress{display:block}}
+/* Ask my AI and portrait controls, warmed to match */
+html[data-theme=ember] .assistant-spark{color:#ffb98a}
+html[data-theme=ember] .assistant-status{color:#d9bfa6}
+html[data-theme=ember] .assistant-status i{background:#ff9a5c}
+html[data-theme=ember] .assistant>p{color:#cdbfae}
+html[data-theme=ember] .assistant form{background:rgba(12,9,7,.55);border-color:rgba(255,214,180,.24)}
+html[data-theme=ember] .assistant input{color:#f6efe6}
+html[data-theme=ember] .assistant input::placeholder{color:#a3968a}
+html[data-theme=ember] .assistant input:focus-visible{outline-color:#ff9a5c}
+html[data-theme=ember] .assistant form button{background:linear-gradient(135deg,#ffa25c,#ff5c7f);color:#1a0d06}
+html[data-theme=ember] .prompt-row button{color:#d6cbbd;border-color:rgba(255,214,180,.24)}
+html[data-theme=ember] .prompt-row button:hover{background:rgba(255,154,92,.14)}
+html[data-theme=ember] .avatar-controls{color:#c9b6a2}
+html[data-theme=ember] .avatar-controls button{border-color:rgba(255,214,180,.26)}
+html[data-theme=ember] .avatar-controls button:hover{background:rgba(255,154,92,.14)}
+html[data-theme=ember] .avatar-stage{background:radial-gradient(ellipse at 50% 52%,rgba(255,140,90,.16),transparent 64%)}
+html[data-theme=ember] .site-motion-toggle{background:rgba(24,17,12,.82);border-color:rgba(255,214,180,.24);color:#e7d9c8}
+html[data-theme=ember] button:focus-visible,html[data-theme=ember] a:focus-visible,html[data-theme=ember] summary:focus-visible{outline-color:#ff9a5c}

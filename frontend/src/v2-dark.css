@@ -1,0 +1,56 @@
+/* Glass themes. <html data-theme="dark"> is blue glass, data-theme="ember" adds v2-ember.css on top; no attribute = light theme. */
+html[data-theme]{background:#07080c;color:#f2f3f7;scroll-padding-top:104px;--v2-ink:#f2f3f7;--v2-ground:#07080c;--v2-accent:#8da0ff;--v2-fill:#4460f5;--v2-muted:#a5a9b6;--v2-rule:rgba(255,255,255,.12);--glass:rgba(255,255,255,.05);--glass-strong:rgba(16,18,28,.58);--glass-line:rgba(255,255,255,.12);--copy:#c9ccd6;--blur:blur(22px) saturate(150%);--glow-rgb:77 104 255;--blob2-rgb:168 85 247;--blob3-rgb:20 184 166;--assistant-bg:linear-gradient(120deg,rgba(40,48,82,.72),rgba(20,23,36,.72))}
+html[data-theme] body{background:transparent;color:var(--v2-ink)}
+html[data-theme] body::before{content:'';position:fixed;inset:-25%;z-index:-2;pointer-events:none;background:radial-gradient(36% 32% at 20% 16%,rgb(var(--glow-rgb) / .36),transparent 70%),radial-gradient(32% 28% at 84% 30%,rgb(var(--blob2-rgb) / .24),transparent 70%),radial-gradient(38% 34% at 58% 88%,rgb(var(--blob3-rgb) / .17),transparent 70%)}
+html[data-theme][data-motion=on] body::before{animation:glass-drift 28s ease-in-out infinite alternate}
+@keyframes glass-drift{from{transform:translate3d(-3%,-2%,0) rotate(0deg)}to{transform:translate3d(4%,3%,0) rotate(8deg)}}
+html[data-theme] ::selection{background:var(--v2-fill);color:#fff}
+html[data-theme] section[id],html[data-theme] article[id]{scroll-margin-top:104px}
+/* floating glass navigation */
+html[data-theme] .v2-header{position:sticky;top:14px;z-index:40;margin-top:14px;padding:9px 10px 9px 24px;border-radius:99px;background:var(--glass-strong);border:1px solid var(--glass-line);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);box-shadow:0 14px 44px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.08)}
+html[data-theme] .v2-header .v2-nav-contact:hover{background:var(--v2-fill);color:#fff}
+/* hero */
+html[data-theme] .v2-hero{padding-top:56px}
+html[data-theme] .v2-lead{color:var(--copy)}
+html[data-theme] .v2-button-accent{background:var(--v2-fill);color:#fff;box-shadow:0 12px 34px -10px rgb(var(--glow-rgb) / .75)}
+html[data-theme] .v2-button-accent:hover{background:#5b76ff}
+html[data-theme] .v2-button-line{border-color:rgba(255,255,255,.3);background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+html[data-theme] .v2-button-dark:hover{background:var(--v2-fill);color:#fff}
+html[data-theme] .v2-bust{background:rgba(255,255,255,.04);border:1px solid var(--glass-line);border-bottom:0;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+html[data-theme] .v2-hero-side .assistant{border-color:var(--glass-line);background:var(--assistant-bg);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+html[data-theme] .v2-hero-side{filter:drop-shadow(0 40px 80px rgb(var(--glow-rgb) / .28))}
+/* evidence */
+html[data-theme] .v2-evidence{border:0}
+html[data-theme] .v2-evidence-grid{background:var(--glass);border:1px solid var(--glass-line);border-radius:26px;padding:4px 34px;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+html[data-theme] .v2-evidence p{color:var(--copy)}
+html[data-theme] .fx-marquee{border-top:0;margin-top:26px}
+html[data-theme] .fx-marquee span{-webkit-text-stroke-color:rgba(255,255,255,.5)}
+/* work */
+html[data-theme] .v2-statement,html[data-theme] .v2-case p,html[data-theme] .v2-method-grid p,html[data-theme] .v2-education-card p,html[data-theme] .v2-about p{color:var(--copy)}
+html[data-theme] .v2-measured p{color:var(--v2-ink)}
+html[data-theme] .v2-mono b.v2-wip{color:#f0b35a}
+html[data-theme] .v2-media-tabs{background:var(--glass);border:1px solid var(--glass-line);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+html[data-theme] .v2-media-tabs button{color:var(--copy)}
+html[data-theme] .v2-media-tabs button[aria-pressed=true]{color:#07080c}
+html[data-theme] .v2-stage.project{border:1px solid rgba(255,255,255,.14);box-shadow:0 50px 130px -50px rgb(var(--glow-rgb) / .55),0 0 0 8px rgba(255,255,255,.03)}
+html[data-theme] .v2-video{background:rgba(10,12,18,.6);border:1px solid var(--glass-line);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);box-shadow:0 50px 130px -50px rgb(var(--glow-rgb) / .55)}
+html[data-theme] .v2-case-small,html[data-theme] .v2-education-card{background:var(--glass);border:1px solid var(--glass-line);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+html[data-theme][data-motion=on] .v2-case-small:hover,html[data-theme][data-motion=on] .v2-education-card:hover{border-color:rgba(255,255,255,.3);box-shadow:0 34px 80px -34px rgb(var(--glow-rgb) / .6),inset 0 1px 0 rgba(255,255,255,.12)}
+html[data-theme] .fx-spot::before{background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgb(var(--glow-rgb) / .2),transparent 62%)}
+/* method, education, about */
+html[data-theme] .fx-rule{background:rgba(255,255,255,.4)}
+html[data-theme] .v2-logo{align-self:flex-start;height:auto;padding:12px 18px;border-radius:14px;background:#f5f5f1}
+html[data-theme] .v2-logo img{max-height:64px}
+html[data-theme] .v2-tools>div:first-child{border-top-color:rgba(255,255,255,.4)}
+/* contact */
+html[data-theme] .v2-contact{background:transparent;color:var(--v2-ink);padding:40px 0 48px}
+html[data-theme] .v2-contact .v2-shell{padding:72px 56px 30px;border-radius:34px;background:var(--glass);border:1px solid var(--glass-line);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 60px 140px -60px rgb(var(--glow-rgb) / .6)}
+html[data-theme] .v2-contact h2 a{color:var(--v2-accent)}
+html[data-theme] .v2-button-light{background:#fff;color:#0b0c10}
+html[data-theme] .v2-button-ghost{border-color:rgba(255,255,255,.3);color:var(--v2-ink)}
+html[data-theme] .v2-button-ghost:hover{background:#fff;color:#0b0c10}
+html[data-theme] .v2-footer-bottom{border-top-color:var(--v2-rule)}
+html[data-theme] .fx-spot-dark::before{border-radius:0;background:radial-gradient(720px circle at var(--mx,50%) var(--my,50%),rgb(var(--glow-rgb) / .3),transparent 62%)}
+html[data-theme] .fx-intro{background:#0b0d14;color:#f2f3f7}
+@media(max-width:980px){html[data-theme] .v2-evidence-grid{padding:4px 24px}}
+@media(max-width:760px){html[data-theme] .v2-header{position:static;border-radius:24px;padding:12px 16px}html[data-theme]{scroll-padding-top:24px}html[data-theme] .v2-contact .v2-shell{padding:44px 22px 24px;border-radius:24px}}

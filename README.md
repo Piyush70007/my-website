@@ -25,7 +25,7 @@ Tests cover the AI provider flow, origin and input boundaries, request throttlin
 
 Commit the React source and prepared root output together, then push `main`. The existing GitHub Pages main/root configuration publishes the site without changing DNS. Keep CNAME set to `piyushchavan.com`. `.nojekyll` bypasses Jekyll. Older generated bundles are removed by the build script only when listed in its previous manifest.
 
-The remote branch `backup/portfolio-before-studio-redesign-20261111` preserves the old public website. Roll back by restoring its root files and pushing a normal commit, or revert the release commit; do not force-push history.
+The remote branch `backup/portfolio-before-studio-redesign-20261111` preserves the old public website. The branch `chatgpt-webbackup` preserves the site as it was before the 17 November 2026 ember redesign. Roll back by restoring its root files and pushing a normal commit, or revert the release commit; do not force-push history.
 
 ## Portfolio AI
 

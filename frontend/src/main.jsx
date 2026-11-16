@@ -4,6 +4,9 @@ import { MotionProvider } from './MotionSystem.jsx';
 import App from './App.jsx';
 import './style.css';
 import './motion.css';
+import './v2.css';
+import './v2-dark.css';
+import './v2-ember.css';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode><MotionProvider><App /></MotionProvider></React.StrictMode>,

@@ -44,3 +44,26 @@ export default function MivvyProject() {
     </div></details>
   </article></Reveal>;
 }
+
+export function MivvyPreview() {
+  const [view, setView] = useState('desktop');
+  const { enabled } = useSiteMotion();
+  const desktop = view === 'desktop';
+  return <figure className="mivvy-real-preview">
+      <div className="mivvy-capture-heading"><span>ONE ASSISTANT. TWO VIEWS.</span><div role="group" aria-label="Mivvy web screenshot views"><button aria-pressed={desktop} onClick={() => setView('desktop')} aria-label="Show Mivvy desktop-browser screenshot"><Monitor size={14} />Desktop</button><button aria-pressed={!desktop} onClick={() => setView('mobile')} aria-label="Show Mivvy phone screenshot"><Smartphone size={14} />Phone</button></div></div>
+      <div className={`mivvy-flip-stage ${enabled ? '' : 'without-motion'}`}>
+        <div className={`mivvy-flip-card ${desktop ? '' : 'is-flipped'}`}>
+          <div className="mivvy-face mivvy-face-front" aria-hidden={!desktop} inert={!desktop}>
+            <div className="mivvy-view-label"><Monitor size={13} /><span>DESKTOP BROWSER</span><i /><span>WEB APP</span></div>
+            <div className="mivvy-capture desktop-capture"><img src="/assets/mivvy-web-desktop.jpg" width="1280" height="900" alt="Actual Mivvy web app in a desktop browser, showing its sidebar, expressive eyes, clean conversation screen, and message controls" loading="lazy" /></div>
+          </div>
+          <div className="mivvy-face mivvy-face-back" aria-hidden={desktop} inert={desktop}>
+            <div className="mivvy-view-label"><Smartphone size={13} /><span>MOBILE COMPANION</span><i /><span>WEB APP</span></div>
+            <div className="mivvy-capture mobile-capture"><img src="/assets/mivvy-web-mobile.jpg" width="390" height="844" alt="Actual Mivvy phone web interface with expressive eyes, conversation prompts, microphone controls, and bottom navigation" loading="lazy" /></div>
+          </div>
+        </div>
+      </div>
+      <div className="mivvy-flip-footer"><span aria-live="polite">{desktop ? '01 / DESKTOP BROWSER' : '02 / MOBILE WEB'}</span><button onClick={() => setView(desktop ? 'mobile' : 'desktop')} aria-label={desktop ? 'Flip Mivvy preview to mobile' : 'Flip Mivvy preview to desktop'}><RotateCw size={15} />Flip to {desktop ? 'mobile' : 'desktop'}</button></div>
+      <figcaption>Captured from the live web app with a clean conversation. These are screenshots; the Windows application has a separate interface.</figcaption>
+    </figure>;
+}

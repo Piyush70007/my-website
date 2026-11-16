@@ -1,3 +1,12 @@
+## 17 November 2026 — Ember redesign with teaser videos
+
+- New page design: warm dark glass ("ember") with a floating navigation pill, an evidence strip, a "How I build" section, and a new headline. A fault line down the left edge shows scroll progress on wide screens.
+- OpenMail and Mivvy each offer a "Live demo | Teaser video" switch. The existing OpenMail tour, Mivvy flip, SentryML example, SafeOps diagram, 3D bust and Ask my AI are unchanged in behaviour.
+- New motion layer (intro curtain, word reveals, count-ups, scroll-driven stages, pointer effects), all stopped by the motion toggle and by reduced-motion settings.
+- Three themes share one codebase: `data-theme="ember"` (default) or `"dark"` on `<html>` in `frontend/index.html`; remove the attribute for the light theme.
+- The assistant Worker, `api/ask.js` and `Assistant.jsx` are not changed.
+- The previous site is kept on the `chatgpt-webbackup` branch.
+
 ## 13 November 2026 — Remove the portrait flash
 
 - Remove the flat portrait from the 3D viewer’s loading and device fallback states so reloading never briefly shows a second image.

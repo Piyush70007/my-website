@@ -39,7 +39,7 @@ From the repository root, run `npm ci` and `npm --prefix frontend ci`, then `npm
 
 The existing Cloudflare Worker is deployed separately with `npm run deploy:assistant`. Its provider keys remain in server secrets. Local previews use the published-facts guide; the real model is called only on the two allowed production origins.
 
-The Mivvy card flips between the current desktop-browser and phone web screenshots. It respects motion settings, supports keyboard-operated controls, and hides the reverse face from assistive technology. Replace the front asset and its labels together when Piyush supplies an approved screenshot of the Windows application. The current front image must not be described as the executable.
+The Mivvy card offers Windows EXE, desktop-browser and phone web previews. The Windows image is an approved capture of the actual running app, with a separate full-size link. The other two assets show the web application. The preview respects motion settings, supports keyboard-operated controls, and hides the reverse face from assistive technology.
 
 The original public site is retained in the remote backup branch `backup/portfolio-before-studio-redesign-20261111`. The public CV remains unset until Piyush supplies it.
 

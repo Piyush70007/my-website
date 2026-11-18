@@ -39,7 +39,9 @@ From the repository root, run `npm ci` and `npm --prefix frontend ci`, then `npm
 
 The existing Cloudflare Worker is deployed separately with `npm run deploy:assistant`. Its provider keys remain in server secrets. Local previews use the published-facts guide; the real model is called only on the two allowed production origins.
 
-The Mivvy card offers Windows EXE, desktop-browser and phone web previews. The Windows image is an approved capture of the actual running app, with a separate full-size link. The other two assets show the web application. The preview respects motion settings, supports keyboard-operated controls, and hides the reverse face from assistive technology.
+The Mivvy card flips between Windows EXE, desktop-browser and phone web previews. Each view has its own keyed animated face, including Windows-to-desktop switches. `MivvyExePreview.jsx` recreates the Windows layout as a responsive local UI demo: a Canvas 2D globe, identity selection, sample messages with cancellation, illustrative tools and a simulated listening state. It never requests microphone permission, calls an AI provider, saves tasks or operates the visitor's computer. The full-size link remains an approved screenshot of the real EXE.
+
+The globe is capped at 24 fps, or 12 fps with 92 points in Low power mode. It stops when off-screen, when the document is hidden, when its preview face unmounts, or when motion is paused/reduced. Identity and chat state remain local and are reset when the preview unmounts. Desktop-browser and phone images show the web application; they are not native iOS captures.
 
 The original public site is retained in the remote backup branch `backup/portfolio-before-studio-redesign-20261111`. The public CV remains unset until Piyush supplies it.
 

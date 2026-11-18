@@ -1,6 +1,7 @@
 # Asset provenance
 
 - Mivvy Windows EXE preview: captured directly from Piyush’s running Mivvy build 48 on 18 November 2026, at his request for this portfolio. The unchanged window screenshot shows an empty conversation and contains no email, chat history, credentials or API keys. Stored as `public/assets/mivvy-desktop-exe.jpg`; the web screenshots remain separate assets.
+- Interactive Windows preview: original React, Canvas 2D and CSS code in `MivvyExePreview.jsx` and `mivvy-exe.css`, recreating the captured application's layout. The animated globe is drawn procedurally; the conversation and tools use clearly labeled local sample data. It is not a remote session or a running Windows executable.
 
 - University of Europe logo: [official press gallery](https://www.ue-germany.com/de/news-center/presse), original [PNG](https://www.ue-germany.com/uploads/sites/9/2024/07/final-vectors-transparent_logo-1.png). Unmodified, used to identify the institution Piyush attended.
 - Savitribai Phule Pune University emblem: [official logo downloads](https://bsw.unipune.ac.in/Logos.html), original [JPG](https://bsw.unipune.ac.in/BSD_Photos/All%20LOGO/University%20New%20Logo.JPG). Unmodified, used to identify the institution Piyush attended.

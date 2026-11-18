@@ -2,7 +2,7 @@
 
 React, Vite, Motion and Three.js power the portfolio at https://piyushchavan.com. The source lives in `frontend/`. GitHub Pages serves the prepared root files; the existing Cloudflare Worker supplies AI answers with server-only Groq credentials.
 
-The portfolio includes a rotating Hyper3D bust, a factual AI guide, four projects, education, and a CV request section. OpenMail embeds its actual interface behind an isolated fictional sample transport. Mivvy’s card includes a real Windows EXE capture alongside the desktop-browser and phone web screenshots. SentryML links to its real API docs, and SafeOps is labeled in development. The CV PDF is not published.
+The portfolio includes a rotating Hyper3D bust, a factual AI guide, four projects, education, and a CV request section. OpenMail embeds its actual interface behind an isolated fictional sample transport. Mivvy’s three-way flip preview includes an interactive Windows UI demonstration alongside desktop-browser and phone web screenshots, plus a link to a real EXE capture. The Windows demo has a reactive globe, identity switching and local sample conversation; it never connects to the visitor's microphone, accounts or computer. SentryML links to its real API docs, and SafeOps is labeled in development. The CV PDF is not published.
 
 ## Develop and verify
 

@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { ArrowUpRight, ChevronDown, Monitor, RotateCw, Smartphone } from 'lucide-react';
 import { Reveal, useSiteMotion } from './MotionSystem.jsx';
 import './mivvy.css';
+import MivvyExePreview from './MivvyExePreview.jsx';
 
 export default function MivvyProject() {
   const [view, setView] = useState('desktop');
@@ -53,20 +55,18 @@ export function MivvyPreview() {
   const next = { windows: 'desktop', desktop: 'mobile', mobile: 'windows' }[view];
   const labels = { windows: 'Windows EXE', desktop: 'desktop web', mobile: 'phone web' };
   return <figure className="mivvy-real-preview">
-      <div className="mivvy-capture-heading"><span>ONE ASSISTANT. THREE VIEWS.</span><div role="group" aria-label="Mivvy screenshot views"><button aria-pressed={windows} onClick={() => setView('windows')} aria-label="Show Mivvy Windows EXE screenshot"><Monitor size={14} />Windows EXE</button><button aria-pressed={view === 'desktop'} onClick={() => setView('desktop')} aria-label="Show Mivvy desktop-browser screenshot"><Monitor size={14} />Desktop web</button><button aria-pressed={mobile} onClick={() => setView('mobile')} aria-label="Show Mivvy phone screenshot"><Smartphone size={14} />Phone web</button></div></div>
-      <div className={`mivvy-flip-stage ${windows ? 'exe-stage' : ''} ${enabled ? '' : 'without-motion'}`}>
-        <div className={`mivvy-flip-card ${mobile ? 'is-flipped' : ''}`}>
-          <div className="mivvy-face mivvy-face-front" aria-hidden={mobile} inert={mobile}>
-            <div className="mivvy-view-label"><Monitor size={13} /><span>{windows ? 'WINDOWS APPLICATION' : 'DESKTOP BROWSER'}</span><i /><span>{windows ? 'EXE' : 'WEB APP'}</span></div>
-            <div className="mivvy-capture desktop-capture">{windows ? <img src="/assets/mivvy-desktop-exe.jpg" width="1707" height="912" alt="Actual Mivvy Windows application with Andrea's pink reactive globe, Andrea, Jarvis and Ultron selectors, conversation panel, microphone controls and personal tools" loading="lazy" /> : <img src="/assets/mivvy-web-desktop.jpg" width="1280" height="900" alt="Actual Mivvy web app in a desktop browser, showing its sidebar, expressive eyes, clean conversation screen, and message controls" loading="lazy" />}</div>
-          </div>
-          <div className="mivvy-face mivvy-face-back" aria-hidden={!mobile} inert={!mobile}>
-            <div className="mivvy-view-label"><Smartphone size={13} /><span>MOBILE COMPANION</span><i /><span>WEB APP</span></div>
-            <div className="mivvy-capture mobile-capture"><img src="/assets/mivvy-web-mobile.jpg" width="390" height="844" alt="Actual Mivvy phone web interface with expressive eyes, conversation prompts, microphone controls, and bottom navigation" loading="lazy" /></div>
-          </div>
+      <div className="mivvy-capture-heading"><span>ONE ASSISTANT. THREE VIEWS.</span><div role="group" aria-label="Mivvy preview views"><button aria-pressed={windows} onClick={() => setView('windows')} aria-label="Show Mivvy Windows EXE preview"><Monitor size={14} />Windows EXE</button><button aria-pressed={view === 'desktop'} onClick={() => setView('desktop')} aria-label="Show Mivvy desktop-browser screenshot"><Monitor size={14} />Desktop web</button><button aria-pressed={mobile} onClick={() => setView('mobile')} aria-label="Show Mivvy phone screenshot"><Smartphone size={14} />Phone web</button></div></div>
+      <div className={`mivvy-flip-stage mivvy-live-stage ${enabled ? '' : 'without-motion'}`}>
+        <div className="mivvy-flip-card">
+          <AnimatePresence initial={false} mode="wait"><motion.div key={view} data-preview={view} className="mivvy-face" initial={{rotateY:-90,opacity:0}} animate={{rotateY:0,opacity:1}} exit={{rotateY:90,opacity:0}} transition={{duration:enabled ? .32 : 0,ease:[.22,.7,.2,1]}}>
+            {windows ? <MivvyExePreview /> : <>
+              <div className="mivvy-view-label">{mobile ? <Smartphone size={13} /> : <Monitor size={13} />}<span>{mobile ? 'MOBILE COMPANION' : 'DESKTOP BROWSER'}</span><i /><span>WEB APP</span></div>
+              <div className={`mivvy-capture ${mobile ? 'mobile-capture' : 'desktop-capture'}`}><img src={mobile ? '/assets/mivvy-web-mobile.jpg' : '/assets/mivvy-web-desktop.jpg'} width={mobile ? 390 : 1280} height={mobile ? 844 : 900} alt={mobile ? 'Actual Mivvy phone web interface with expressive eyes, conversation prompts, microphone controls, and bottom navigation' : 'Actual Mivvy web app in a desktop browser, showing its sidebar, expressive eyes, conversation screen, and message controls'} loading="lazy" /></div>
+            </>}
+          </motion.div></AnimatePresence>
         </div>
       </div>
       <div className="mivvy-flip-footer"><span aria-live="polite">{windows ? '03 / WINDOWS EXE' : mobile ? '02 / MOBILE WEB' : '01 / DESKTOP BROWSER'}</span><div className="mivvy-preview-actions">{windows && <a href="/assets/mivvy-desktop-exe.jpg" target="_blank" rel="noopener noreferrer">View full size<ArrowUpRight size={13} /></a>}<button onClick={() => setView(next)} aria-label={`Show Mivvy ${labels[next]} preview`}><RotateCw size={15} />{labels[next]}</button></div></div>
-      <figcaption>{windows ? 'Captured directly from the running Mivvy Windows EXE. Andrea’s reactive globe, voice identity switches and desktop controls are shown with a clean conversation.' : 'Captured from the live web app with a clean conversation. The phone view shown here is the mobile web interface.'}</figcaption>
+      <figcaption>{windows ? 'Try the Windows interface: switch identities, watch the reactive globe and send a sample message. This is an interactive portfolio demo; replies are local samples and no computer or microphone access is connected. The full-size link shows a real screenshot of the running EXE.' : 'Captured from the live web app with a clean conversation. The phone view shown here is the mobile web interface.'}</figcaption>
     </figure>;
 }
